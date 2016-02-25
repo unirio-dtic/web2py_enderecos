@@ -1,0 +1,3 @@
+[submodule "web2py_common"]
+	path = web2py_common
+	url = https://github.com/unirio-dtic/web2py_common.git
