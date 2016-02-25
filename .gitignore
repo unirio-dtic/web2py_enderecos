@@ -7,3 +7,5 @@ models/1_dbconn.py
 static/temp
 uploads/
 sessions/
+static/unirio
+views/unirio
