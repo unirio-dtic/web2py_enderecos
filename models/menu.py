@@ -5,10 +5,9 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="http://www.web2py.com/",
-                  _id="web2py-logo")
-response.title = request.application.replace('_',' ').title()
+response.logo = A("DTIC/UNIRIO",
+                  _class="brand", _href="http://www.unirio.br/dtic")
+response.title = 'Boilerplate - UNIRIO'
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
