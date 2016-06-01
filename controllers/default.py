@@ -57,4 +57,8 @@ def call():
     """
     return service()
 
+def test():
+
+    return dict()
+
 
