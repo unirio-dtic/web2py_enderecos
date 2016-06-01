@@ -95,6 +95,8 @@
 'Live chat': 'Chat ao vivo',
 'Live Chat': 'Chat ao vivo',
 'Log In': 'Log In',
+'Log Out': 'Log Out',
+'Logged in': 'Logged in',
 'login': 'Entrar',
 'Login': 'Autentique-se',
 'logout': 'Sair',

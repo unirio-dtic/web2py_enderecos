@@ -10,10 +10,11 @@
 # request.requires_https()
 
 ## app configuration made easy. Look inside private/appconfig.ini
+from unirio.login import UNIRIOLDAP
 from gluon.contrib.appconfig import AppConfig
+from gluon import current
 ## once in production, remove reload=True to gain full speed
-myconf = AppConfig(reload=True)
-
+from unirio.mail import EmailBasico
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
@@ -41,15 +42,7 @@ response.form_label_separator = myconf.take('forms.separator')
 # response.optimize_js = 'concat,minify,inline'
 ## (optional) static assets folder versioning
 # response.static_version = '0.0.0'
-#########################################################################
-## Here is sample code if you need for
-## - email capabilities
-## - authentication (registration, login, logout, ... )
-## - authorization (role based authorization)
-## - services (xml, csv, json, xmlrpc, jsonrpc, amf, rss)
-## - old style crud actions
-## (more options discussed in gluon/tools.py)
-#########################################################################
+
 
 from gluon.tools import Auth, Service, PluginManager
 
@@ -58,13 +51,32 @@ service = Service()
 plugins = PluginManager()
 
 ## create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=True, signature=False)
+auth.settings.actions_disabled = [
+    'register',
+    'retrieve_username',
+    'profile',
+    'lost_password',
+    'request_reset_password',
+    'change_password'
+]
+
+db.auth_user.username.label = 'CPF'
+
+from gluon.contrib.login_methods.ldap_auth import ldap_auth
+auth.settings.login_methods=[ldap_auth(mode='uid', server=UNIRIOLDAP.LDAP_TESTE, base_dn='ou=people,dc=unirio,dc=br')]
+# auth.settings.login_onaccept.append(login_helper.adiciona_info_pessoa_logada)
 
 ## configure email
 mail = auth.settings.mailer
 mail.settings.server = 'logging' if request.is_local else myconf.take('smtp.server')
 mail.settings.sender = myconf.take('smtp.sender')
 mail.settings.login = myconf.take('smtp.login')
+
+
+current.mailer = EmailBasico(mail, response.render)
+
+
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
