@@ -11,7 +11,7 @@
 
 ## app configuration made easy. Look inside private/appconfig.ini
 from unirio.login import UNIRIOLDAP
-from gluon.contrib.appconfig import AppConfig
+
 from gluon import current
 ## once in production, remove reload=True to gain full speed
 from unirio.mail import EmailBasico
