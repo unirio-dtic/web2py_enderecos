@@ -2,10 +2,9 @@ databases/
 *.pyc
 errors/
 session/
-models/1_db_conn.py
-models/1_dbconn.py
 static/temp
 uploads/
 sessions/
 static/*/unirio
+private/
 views/_unirio
