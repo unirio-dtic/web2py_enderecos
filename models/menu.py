@@ -5,8 +5,9 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A("DTIC/UNIRIO",
-                  _class="brand", _href="http://www.unirio.br/dtic")
+response.logo = DIV(A(IMG(_src=URL("static", "images/unirio/dtic-emblema-branco.png"), _class="small_logo_dtic"),
+                      _href="http://www.unirio.br/dtic"),
+                    A("DTIC/UNIRIO", _class="brand", _href="http://www.unirio.br/dtic"))
 response.title = 'Boilerplate - UNIRIO'
 response.subtitle = 'Boilerplate'
 
