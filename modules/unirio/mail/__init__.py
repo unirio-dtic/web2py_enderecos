@@ -1,18 +1,15 @@
 #coding:utf-8
 
-from gluon import current  # Dependência básica (porém desnecessária do web2py)
-
-
 class EmailBasico(object):
 
-    def __init__(self, mail=current.mail, render=current.response.render):
+    def __init__(self, mail, render):
         """
         A classe ``EmailBasico`` trata estritamente de envio de emails
         Utilizada a classe  nativa de email de gluon.tools.
 
         :type mail: gluon.tools.Mail
-        :param mail: Classe Mail que enviará os emails de fato. (current.mail)
-        :type render: callable que aceita dois parâmetros (a,b), onde a é uma str/enderaço de uma view e b é um contexto passado para a mesma.
+        :param mail: Classe Mail que enviará os emails de fato. (auth.settings.mailer)
+        :type render: callable que aceita dois parâmetros (a,b), onde a é uma str/enderaço de uma view e b é um contexto passado para a mesma. (response.render por exemplo)
         :param render Renderizador que gera a mensagem do email.
         """
         self.mail = mail
