@@ -1,0 +1,50 @@
+{
+  "valid": {
+     "servidor_aluno": {
+        "cpf": "09918980796",
+        "cod_operador": 33694,
+        "fone_celular": "21982598988",
+        "fone_residencial": "2130160876",
+        "descr_rua": "Rua Pinto Teles",
+        "descr_numero": "320",
+        "descr_complemento": "bl03 apt106",
+        "descr_estado": "Rio de Janeiro",
+        "descr_pais": "Brasil",
+        "descr_municipio": "Rio de Janeiro",
+        "descr_bairro": "Jacarepaguá",
+        "descr_cep": "21341270",
+        "descr_mail": "marcelo.endson@unirio.br"
+    },
+    "servidor": {
+      "cpf": "12766527710",
+      "cod_operador": 33694,
+      "fone_celular": "21982598988",
+      "fone_residencial": "2130160876",
+      "descr_rua": "Rua Pinto Teles",
+      "descr_numero": "320",
+      "descr_complemento": "bl03 apt106",
+      "descr_estado": "Rio de Janeiro",
+      "descr_pais": "Brasil",
+      "descr_municipio": "Rio de Janeiro",
+      "descr_bairro": "Jacarepaguá",
+      "descr_cep": "21341270",
+      "descr_mail": "magalhaesmartins@icloud.com"
+    },
+    "aluno": {
+      "cpf": "13038968773",
+      "cod_operador": 33694,
+      "fone_celular": "21982598988",
+      "fone_residencial": "2130160876",
+      "descr_rua": "Rua Pinto Teles",
+      "descr_numero": "320",
+      "descr_complemento": "bl03 apt106",
+      "descr_estado": "Rio de Janeiro",
+      "descr_pais": "Brasil",
+      "descr_municipio": "Rio de Janeiro",
+      "descr_bairro": "Jacarepaguá",
+      "descr_cep": "21341270",
+      "descr_mail": "victoraguilarsouza@unirio.rj.fu"
+    }
+},
+  "invalid": {}
+}
