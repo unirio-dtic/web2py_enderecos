@@ -1,4 +1,5 @@
 # coding=utf-8
+from gluon.storage import Storage
 from gluon.tools import Auth, Service, PluginManager
 
 auth = Auth(db)
@@ -19,7 +20,7 @@ auth.settings.actions_disabled = [
 db.auth_user.username.label = 'CPF'
 
 from gluon.contrib.login_methods.ldap_auth import ldap_auth
-auth.settings.login_methods=[ldap_auth(mode='uid', server=UNIRIOLDAP.LDAP_TESTE, base_dn='ou=people,dc=unirio,dc=br')]
+auth.settings.login_methods=[ldap_auth(mode='uid', server=UNIRIOLDAP.LDAP_PROD, base_dn='ou=people,dc=unirio,dc=br')]
 # auth.settings.login_onaccept.append(login_helper.adiciona_info_pessoa_logada)
 
 ## configure email
@@ -41,7 +42,7 @@ def popula_sessao(form):
     usuario = api.get_single_result("v_projetos_pessoas", {"cpf": form.vars.username}, cache_time=12000)
     first_name = usuario["nome"].split()[0].title()
     auth.user.update(first_name=first_name)
-    session.profile = usuario
+    session.profile = Storage(usuario)
 
 auth.settings.login_onaccept = [popula_sessao]
 

@@ -1,36 +1,19 @@
 # coding=utf-8
-from unirio.api.exceptions import NoContentException
-
-
-@auth.requires_login()
-def dados():
-    try:
-        result = api.get_single_result("v_pessoas_enderecos", {"id_pessoa": session.profile["id_pessoa"]})
-
-        id_enderecos = []
-        for field in ['id_endereco_alu', 'id_endereco_fun']:
-            if result[field]:
-                id_enderecos.append(result[field])
-
-        enderecos = []
-        session.enderecos = {}
-
-        for id in id_enderecos:
-            endereco = api.get_single_result("enderecos", {"id_endereco": id})
-            enderecos.append(endereco)
-            session.enderecos[id] = endereco
-
-        return dict(enderecos=enderecos)
-    except NoContentException:
-        pass
+from procedure_form import ProcedureFormFactory
+from endereco_utils import lista_opcoes
 
 
 @auth.requires_login()
 def alterar():
-    id_endereco = int(request.args[0])
-    endereco = session.enderecos[id_endereco]
+    query = {"id_pessoa": session.profile["id_pessoa"]}
+    endereco = api.get_single_result("v_pessoas_enderecos", query)
 
-    paises = lista_opcoes(PAISES_OPCAO)
+    endereco = api.get_single_result("enderecos", {
+        "id_endereco": max(endereco['id_endereco_alu'],
+                           endereco['id_endereco_fun'])
+    })
+
+    paises = lista_opcoes(api, PAISES_OPCAO)
     paises.sort()
 
     required_fields = [
@@ -49,24 +32,22 @@ def alterar():
         'descr_mail'
     ]
 
-    types = {
-        "<type 'int'>": 'integer',
-        "<type 'str'>": 'string',
-        "<type 'unicode'>": 'string'
-    }
-
-    def get_type(t):
-        return types.get(t, 'string')
-
-    fields = [Field(key, get_type(endereco[key]), default=remover_acentos(endereco[key]) if endereco[key] else None) for key in required_fields]
-    form = SQLFORM.factory(*fields)
+    form = ProcedureFormFactory(required_fields, endereco).form()
 
     if form.process().accepted:
-        # todo: adicionar chave tipo_endereco
-        # todo: atualizar IND_CORRESP do endereco corrent
-        # todo: adicionar novo endereço
-        # todo: mandar o cara pra outra tela
-        pass
+        try:
+            data = form.vars
+            data.update({
+                'cpf': session.profile.cpf,
+                # 'cod_operador': session.profile.id_usuario
+                'cod_operador': 666
+            })
+            result = api.call_procedure('CriarEndereco', [form.vars])
+            session.form_result = result.content
+        except Exception as e:
+            response.flash = "Alguma de errado aconteçou durante a " \
+                             "atualização de endereço. Contate o suporte " \
+                             "ao usuário"
     elif form.errors:
         response.flash = "Ta fazendo merda. Tenta de novo"
 
